@@ -7,7 +7,7 @@ function compile(loader, initial, callback) {
   link(loader, initial, function (err, data) {
     if (err) return callback(err);
     var out;
-    try { out = gen(data); }
+    try { out = gen(data, true); }
     catch (err) { return callback(err); }
     callback(null, out);
   });

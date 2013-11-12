@@ -25,11 +25,15 @@ function gen(data, bundled) {
       indent(source) + "\n};";
     sources.push(source);
   }
-  sources = [sources.join("\n\n")];
-  sources.unshift("var defs = {};");
-  sources.push("var modules = {};");
-  sources.push("var realRequire = typeof require === 'undefined' ? null : require;");
-  sources.push("require = " + $require.toString().replace("$", ""));
+  sources = sources.join("\n\n");
+  if (!bundled) return sources;
+  sources = [
+    "var modules = {};",
+    "var defs = {};",
+    sources,
+    "var realRequire = typeof require === 'undefined' ? null : require;",
+    "require = " + $require.toString().replace("$", "")
+  ];
   if (hasBinary) sources.push(hexToBin.toString());
   sources.push("require(" + JSON.stringify(data.initial) + ");");
   return sources.join("\n\n");

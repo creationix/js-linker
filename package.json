@@ -4,7 +4,7 @@
   "description": "A library that searches for require calls in js code and links them together into a single script.",
   "main": "compile.js",
   "scripts": {
-    "test": "node test.js | node"
+    "test": "node test.js | node | node"
   },
   "repository": {
     "type": "git",
