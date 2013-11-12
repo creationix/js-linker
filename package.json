@@ -1,0 +1,23 @@
+{
+  "name": "js-linker",
+  "version": "0.0.1",
+  "description": "A library that searches for require calls in js code and links them together into a single script.",
+  "main": "compile.js",
+  "scripts": {
+    "test": "node test.js | node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/creationix/js-linker.git"
+  },
+  "keywords": [
+    "js-compile",
+    "bundle",
+    "browser"
+  ],
+  "author": "Tim Caswell <tim@creationix.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creationix/js-linker/issues"
+  }
+}
