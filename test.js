@@ -1,7 +1,7 @@
 var compile = require('./compile.js');
 
 var fs = require('fs');
-compile(loader, "./test.js", function (err, js) {
+compile(loader, process.argv[2] || "./test.js", function (err, js) {
   if (err) throw err;
   console.log(js);
 });
