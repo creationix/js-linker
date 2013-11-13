@@ -1,7 +1,5 @@
 "use strict";
 
-var inspect = require('util').inspect;
-
 module.exports = gen;
 function gen(data, bundled) {
   var sources = [];
@@ -22,7 +20,7 @@ function gen(data, bundled) {
     else throw new TypeError("Invalid type: " + module.type);
     var source = generator(module).trim();
     source = "defs[" + JSON.stringify(name) + "] = function (module, exports) {\n" +
-      indent(source) + "\n};";
+      source + "\n};";
     sources.push(source);
   }
   sources = sources.join("\n\n");
@@ -37,12 +35,6 @@ function gen(data, bundled) {
   if (hasBinary) sources.push(hexToBin.toString());
   sources.push("require(" + JSON.stringify(data.initial) + ");");
   return sources.join("\n\n");
-}
-
-function indent(code) {
-  return code.split("\n").map(function (line) {
-    return "  " + line.replace(/[ \r]*$/, '');
-  }).join("\n");
 }
 
 function genJs(module) {
