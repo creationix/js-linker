@@ -4,6 +4,7 @@
 // Extract all require calls using a proper state-machine parser.
 module.exports = mine;
 function mine(js) {
+  js = "" + js;
   var names = [];
   var state = 0;
   var ident;
@@ -11,7 +12,7 @@ function mine(js) {
   var name;
   var start;
 
-  var isIdent = /[a-z0-9_.]/i;
+  var isIdent = /[a-z0-9_.$]/i;
   var isWhitespace = /[ \r\n\t]/;
 
   function $start(char) {
@@ -37,6 +38,12 @@ function mine(js) {
     if (char === "(" && ident === "require") {
       ident = undefined;
       return $call;
+    } else {
+      if (isWhitespace.test(char)){
+        if (ident !== 'yield' && ident !== 'return'){
+          return $ident;
+        }
+      }
     }
     return $start(char);
   }
@@ -56,7 +63,19 @@ function mine(js) {
     if (char === quote) {
       return $close;
     }
+    if (char === "\\") {
+      return $nameEscape;
+    }
     name += char;
+    return $name;
+  }
+
+  function $nameEscape(char) {
+    if (char === "\\") {
+      name += char;
+    } else {
+      name += JSON.parse('"\\' + char + '"');
+    }
     return $name;
   }
 
@@ -82,7 +101,7 @@ function mine(js) {
     return $string;
   }
 
-  function $escape(char) {
+  function $escape() {
     return $string;
   }
 
@@ -108,7 +127,7 @@ function mine(js) {
     return $multilineComment;
   }
 
-  var state = $start;
+  state = $start;
   for (var i = 0, l = js.length; i < l; i++) {
     state = state(js[i]);
   }
