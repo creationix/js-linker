@@ -61,17 +61,17 @@ function genBinary(module) {
 var modules, defs, realRequire;
 
 function $require(name) {
-  if (name in modules) return modules[name];
-  if (!(name in defs)) {
-    if (realRequire) return realRequire(name);
-    throw new Error("Missing module: " + name);
+  var mod = modules[name];
+  if (!mod) {
+    var def = defs[name];
+    if (!def) {
+      if (realRequire) return realRequire(name);
+      throw new Error("Missing module: " + name);
+    }
+    mod = modules[name] = { exports: {} };
+    def(mod, mod.exports);
   }
-  var exports = modules[name] = {};
-  var module = { exports: exports };
-  var def = defs[name];
-  def(module, exports);
-  exports = modules[name] = module.exports;
-  return exports;
+  return mod.exports;
 }
 
 function binToHex(binary) {
