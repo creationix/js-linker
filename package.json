@@ -1,6 +1,6 @@
 {
   "name": "js-linker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A library that searches for require calls in js code and links them together into a single script.",
   "main": "compile.js",
   "scripts": {
