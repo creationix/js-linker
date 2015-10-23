@@ -1,6 +1,8 @@
 js-linker
 =========
 
+[![Join the chat at https://gitter.im/creationix/js-linker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/creationix/js-linker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A library that searches for require calls in js code and links them together into a single script.
 
 This tool can be used in node.js or in the browser.  It's a compile step similar to what browserify does.
